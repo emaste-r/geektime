@@ -6,7 +6,6 @@ public class LRU_List
     public static void  main(String[] args){
         System.out.println("hello world!");
 
-        int maxNodeNum = 100;
         Node head = new Node(0);
 
         insertNode(head, new Node(1));
@@ -36,7 +35,10 @@ public class LRU_List
 
     public static void insertNode(Node head, Node node){
         Node p = head;
+
+        // q是为了能删除最后一个节点
         Node q = head;
+
         boolean findFlag = false;
         int nodeSize = 0;
         int maxSize = 5;
@@ -51,9 +53,10 @@ public class LRU_List
             }
             p = p.next;
             nodeSize +=1;
+
+            // 能定位到倒数第二个节点
             if (q.next != null && q.next.next != null){
                 q = q.next;
-
             }
 
         }
@@ -64,6 +67,8 @@ public class LRU_List
         }else if (!findFlag && (nodeSize == maxSize)){
             node.next = head.next;
             head.next = node;
+
+            // 抛弃最后一个节点
             q.next = null;
         }
     }
