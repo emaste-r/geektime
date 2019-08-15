@@ -5,13 +5,13 @@
  * 2.1、满了：删了最后的节点，并把node插入链表头；
  * 2.2、未满：node插入链表头。
  */
-public class LRUList<T> {
+public class LRUBaseList<T> {
     private Node<T> head;
     private Integer capacity;
     private Integer length;
     private final static Integer DEFAULT_CAPACITY = 5;
 
-    private LRUList() {
+    private LRUBaseList() {
         capacity = DEFAULT_CAPACITY;
         length = 0;
 
@@ -20,7 +20,7 @@ public class LRUList<T> {
     public static void main(String[] args) {
         System.out.println("hello world!");
 
-        LRUList<Integer> list = new LRUList<>();
+        LRUBaseList<Integer> list = new LRUBaseList<>();
         list.head = new Node<>(0);
 
         list.add(1);
@@ -54,6 +54,7 @@ public class LRUList<T> {
      */
     private void add(T data) {
         Node preNode = findPreNode(data);
+        // 如果找不到
         if (preNode == null) {
             if (length < capacity) {
                 insertElemAtBegin(data);
@@ -61,8 +62,8 @@ public class LRUList<T> {
                 insertElemAtBegin(data);
                 deleteElemAtEnd();
             }
-
         } else {
+            // 找到直接提到最前
             insertElemAtBegin(data);
             deleteElemAtMid(preNode);
         }
